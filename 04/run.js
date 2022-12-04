@@ -11,8 +11,6 @@ lineReader.on('line', function (line) {
 
 })
 
-let workOrders
-
 lineReader.on('close', function () {
 
     console.log("amount of lines:", input.length)
