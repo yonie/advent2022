@@ -32,12 +32,6 @@ lineReader.on("close", function () {
   let topEdges = findTopEdges();
   let bottomEdges = findBottomEdges();
 
-  grid.forEach((line) => {
-    console.log(line);
-  });
-
-  console.log("");
-
   let sumEdges = 0;
   answer.forEach((line) => {
     sumEdges += line.filter((x) => x == 1).length;
@@ -49,11 +43,11 @@ lineReader.on("close", function () {
     for (let w = 0;w<width;w++) {
       let score = (calculateScenicScore(h,w))
       if (score>highScore) {
-        console.log("found high score:",score)
         highScore=score
       }
     }
   }
+  console.log("found high score:",highScore)
 });
 
 function findLeftEdges() {
