@@ -7,8 +7,7 @@ var lineReader = require("readline").createInterface({
 
 let input = [];
 let answer = [];
-let highest = [];
-let lowest = [];
+let answer2 = [];
 
 lineReader.on("line", function (line) {
   input.push(line);
@@ -18,12 +17,31 @@ lineReader.on("close", function () {
   // create rope
   const rope = {
     head: { x: 0, y: 0 },
-    tail: { x: 0, y: 0 },
+    tail1: { x: 0, y: 0 },
+    tail2: { x: 0, y: 0 },
+    tail3: { x: 0, y: 0 },
+    tail4: { x: 0, y: 0 },
+    tail5: { x: 0, y: 0 },
+    tail6: { x: 0, y: 0 },
+    tail7: { x: 0, y: 0 },
+    tail8: { x: 0, y: 0 },
+    tail9: { x: 0, y: 0 },
     moveHead: function (x, y) {
       this.head.x = this.head.x + x;
       this.head.y = this.head.y + y;
-
-      this.tail = moveTail(this.head, this.tail);
+      this.tail1 = moveTail(this.head, this.tail1);
+      let tail1Pos = "1x" + [this.tail1.x] + "|y" + [this.tail1.y];
+      if (!answer.includes(tail1Pos)) answer.push(tail1Pos);
+      this.tail2 = moveTail(this.tail1, this.tail2);
+      this.tail3 = moveTail(this.tail2, this.tail3);
+      this.tail4 = moveTail(this.tail3, this.tail4);
+      this.tail5 = moveTail(this.tail4, this.tail5);
+      this.tail6 = moveTail(this.tail5, this.tail6);
+      this.tail7 = moveTail(this.tail6, this.tail7);
+      this.tail8 = moveTail(this.tail7, this.tail8);
+      this.tail9 = moveTail(this.tail8, this.tail9);
+      let tail9Pos = "9x" + [this.tail9.x] + "|y" + [this.tail9.y];
+      if (!answer2.includes(tail9Pos)) answer2.push(tail9Pos);
     },
   };
 
@@ -55,7 +73,8 @@ lineReader.on("close", function () {
     }
   });
 
-  console.log("unique positions", answer.length);
+  console.log("unique positions 1", answer.length);
+  console.log("unique positions 9", answer2.length);
 });
 
 function moveTail(head, tail) {
@@ -82,7 +101,5 @@ function moveTail(head, tail) {
     tail.x = tail.x - 1;
     tail.y = tail.y - 1;
   }
-  let tailPos = "x" + [tail.x] + "|y" + [tail.y];
-  if (!answer.includes(tailPos)) answer.push(tailPos);
   return tail;
 }
