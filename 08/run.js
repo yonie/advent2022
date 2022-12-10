@@ -1,5 +1,3 @@
-const { linkSync } = require("fs");
-
 var lineReader = require("readline").createInterface({
   input: require("fs").createReadStream("08/input"),
   //input: require("fs").createReadStream("08/test"),
