@@ -1,7 +1,5 @@
-const { linkSync, cpSync, cp } = require("fs");
-
 var lineReader = require("readline").createInterface({
-  //input: require("fs").createReadStream("10/test"),
+  // input: require("fs").createReadStream("10/test"),
   input: require("fs").createReadStream("10/input"),
 });
 
@@ -19,32 +17,39 @@ lineReader.on("close", function () {
     },
     cycles: 0,
     addx: function (v) {
-      // console.log("> addx", v);
       this.cycle();
       this.cycle();
       this.register.x = this.register.x + v;
-      // console.log(">> " + this.register.x, this.cycles);
     },
     noop: function () {
-      // console.log("> noop");
       this.cycle();
     },
     cycle: function () {
-      this.cycles = this.cycles + 1;
+      // draw to screen
+      if (
+        this.register.x == this.cycles % 40 ||
+        this.register.x - 1 == this.cycles % 40 ||
+        this.register.x + 1 == this.cycles % 40
+      )
+        process.stdout.write("#");
+      else process.stdout.write(".");
+      if (this.cycles % 40 == 39) process.stdout.write("\r\n");
+
+      // signal strength (exercise 10.1)
       if ((this.cycles - 20) % 40 == 0) {
-        console.log("signalstrength", cpu.cycles * cpu.register.x);
+        // console.log("signalstrength", cpu.cycles * cpu.register.x);
         if (this.cycles <= 220) sum = sum + cpu.cycles * cpu.register.x;
       }
 
+      this.cycles = this.cycles + 1;
     },
   };
 
   input.forEach((instruction) => {
-    // console.log(instruction);
-    if (instruction.startsWith("noop")) cpu.noop();
-    if (instruction.startsWith("addx"))
+    if (instruction == "noop") cpu.noop();
+    if (instruction.startsWith("addx "))
       cpu.addx(parseInt(instruction.substring(5)));
   });
 
-  console.log("sum", sum);
+  console.log("answer1 sum", sum);
 });
